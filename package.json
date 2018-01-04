@@ -1,0 +1,20 @@
+{
+  "name": "personal-email-api",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "author": "nick palmucci",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless": "^1.24.1",
+    "serverless-offline": "^3.16.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.149.0",
+    "babel": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "htmlparser2": "^3.9.2",
+    "unzipper": "^0.8.11",
+    "zlib": "^1.0.5"
+  }
+}
