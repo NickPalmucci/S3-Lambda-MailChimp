@@ -10,11 +10,16 @@
   },
   "dependencies": {
     "aws-sdk": "^2.149.0",
+    "axios": "^0.17.1",
     "babel": "^6.23.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "htmlparser2": "^3.9.2",
+    "jsesc": "^2.5.1",
+    "serverless-webpack": "^4.2.0",
     "unzipper": "^0.8.11",
+    "webpack": "^3.10.0",
     "zlib": "^1.0.5"
   }
 }
