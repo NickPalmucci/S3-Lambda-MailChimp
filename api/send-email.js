@@ -3,9 +3,7 @@ import '../.env';
 
 const emailClient = new AWS.SES({
     apiVersion: '2010-12-01',
-    region: process.env.SERVERLESS_REGION,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    region: 'us-east-1'
 });
 
 module.exports.sendEmail = (to, subject, html) => {
