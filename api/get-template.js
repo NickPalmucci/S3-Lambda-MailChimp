@@ -1,14 +1,15 @@
 import AWS from "aws-sdk";
 import zlib from 'zlib';
-import jsesc from 'jsesc';
+import {parse} from './parse';
 
-export default (bucket, key) => {
+export default async (bucket, key) => {
     const client = new AWS.S3();
 
-    return new Promise((resolve, reject) => {
+    const getHtml = new Promise((resolve, reject) => {
         const downloadStream = client.getObject({Bucket: bucket, Key: key}).createReadStream();
         downloadStream.on('error', error => {
-            reject(console.log('Failed to download', error))
+            console.log('Failed to download', error);
+            reject(error)
         });
         downloadStream.on('data', data => {
             const buffer = Buffer.from(data);
@@ -16,11 +17,19 @@ export default (bucket, key) => {
                 if (err) {
                     console.log('unzip err', err)
                 } else {
-                    console.log('unzip success');
                     const htmlString = buff.toString('utf-8');
-                    return jsesc(htmlString);
+                    return resolve(htmlString);
                 }
             });
         });
     });
+
+    const htmlString = await getHtml;
+    if (!(htmlString instanceof Error)) {
+        const {contentId, contentTitle} = await parse(htmlString);
+        return {htmlString, contentId, contentTitle}
+    } else {
+        return htmlString
+    }
 }
+
