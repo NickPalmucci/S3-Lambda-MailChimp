@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export createCampaign = (user, password) => {
+export const createCampaign = async (user, password, contentId, contentTitle) => {
     const config = {
         method: 'post',
-        url: 'chimpurl',
+        url: 'https://us17.api.mailchimp.com/3.0/campaigns',
         auth: {
             username: user,
             password: password
@@ -11,24 +11,30 @@ export createCampaign = (user, password) => {
         data: {
             type: 'regular',
             recipients: {
-                list_id: 'list'
+                list_id: '47e66d52c4'
             },
             settings: {
-                title: 'title',
-                subject_line: 'subject'
+                title: contentTitle + '-' + contentId,
+                subject_line: 'Id Protection Weekly',
+                from_name: 'Eric'
 
             }
         }
-
     };
 
-    return axios(config);
+    try {
+        const response = await axios(config);
+        return response;
+    } catch (e) {
+        console.log('createCampagin bad response', e.response.data);
+        return e
+    }
 };
 
-export putCampaignHtml = (user, password, campaignId, html) => {
+export const putCampaignHtml = async (user, password, campaignId, html) => {
     const config = {
         method: 'put',
-        url: 'chimpurl' + auth + campaignId,
+        url: 'https://us17.api.mailchimp.com/3.0/campaigns/'+campaignId+'/content',
         auth: {
             username: user,
             password: password
@@ -38,13 +44,19 @@ export putCampaignHtml = (user, password, campaignId, html) => {
         }
     };
 
-    return axios(config);
+    try {
+        const response = await axios(config);
+        return response;
+    } catch (e) {
+        console.log('putCampaginHtml bad response', e.response.data);
+        return e
+    }
 };
 
-export sendCampaignTest = (user, password, campaignId, testAddress) => {
+export const sendCampaignTest = async (user, password, campaignId, testAddress) => {
     const config = {
         method: 'post',
-        url: 'chimpurl' + auth + campaignId,
+        url: 'https://us17.api.mailchimp.com/3.0/campaigns/'+campaignId+'/actions/test',
         auth: {
             username: user,
             password: password
@@ -55,5 +67,30 @@ export sendCampaignTest = (user, password, campaignId, testAddress) => {
         }
     };
 
-    return axios(config);
+    try {
+        const response = await axios(config);
+        return response;
+    } catch (e) {
+        console.log('sendCampaginTest bad response', e.response.data);
+        return e
+    }
+};
+
+export const sendCampaign = async (user, password, campaignId) => {
+    const config = {
+        method: 'post',
+        url: 'https://us17.api.mailchimp.com/3.0/campaigns/'+campaignId+'/actions/send',
+        auth: {
+            username: user,
+            password: password
+        }
+    };
+
+    try {
+        const response = await axios(config);
+        return response;
+    } catch (e) {
+        console.log('sendCampagin bad response', e.response.data);
+        return e
+    }
 };
